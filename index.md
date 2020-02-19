@@ -4,7 +4,7 @@
 
 ### Category Name 1 
 
-[Project 1 Title](Toy Horse Recommendation)
+[Toy Horse Recommendation](Cojoint Model & Market Simulation)
 <"Team 26 Toy Horse Code.rmd">
 
 ---
