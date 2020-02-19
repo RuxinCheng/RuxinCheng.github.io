@@ -4,7 +4,7 @@
 
 ### Case Study 
 
-[Toy Horse Recommendation]("RuxinCheng.github.io/Team 26 Toy Horse Code.Rmd")
+[Toy Horse Recommendation]("Team26-Yogurt-Code.html")
 
 
 ---
