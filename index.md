@@ -4,7 +4,7 @@
 
 ### Category Name 1 
 
-(Cojoint Model & Market Simulation)
+(Toy Horse Recommendation)
 <"Team 26 Toy Horse Code.rmd">
 
 ---
