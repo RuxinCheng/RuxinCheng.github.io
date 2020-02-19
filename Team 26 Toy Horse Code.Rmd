@@ -1,0 +1,450 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+
+
+##################PART A##################
+
+produce part-utilities table
+
+```{r}
+df<-data.frame(c(1:200))
+for (i in 1:length(unique(conjointData$ID))){
+  reg<-lm(ratings~factor(price)+factor(size)+factor(motion)+factor(style), data=conjointData[conjointData$ID==i,],na.action = na.omit)
+  df[i,2:6]<-reg$coefficients
+}
+colnames(df)<-c("ID","Intercept","Price119.99","26inches","Rocking","Glamour")
+df
+```
+
+
+
+
+produce predictions for missing profiles
+
+```{r}
+reg<-lm(ratings~factor(price)+factor(size)+factor(motion)+factor(style), data=conjointData[conjointData$ID==1,],na.action = na.omit)
+df_fill<-conjointData[conjointData$ID==1,]
+pred<-predict(reg,df_fill[rowSums(is.na(df_fill))>0,][,4:7])
+df_fill[rowSums(is.na(df_fill))>0,]$ratings<-pred
+for (i in 2:length(unique(conjointData$ID))){
+  reg<-lm(ratings~factor(price)+factor(size)+factor(motion)+factor(style), data=conjointData[conjointData$ID==i,],na.action = na.omit)
+  df_fill_new<-conjointData[conjointData$ID==i,]
+  pred<-predict(reg,df_fill_new[rowSums(is.na(df_fill_new))>0,][,4:7])
+  df_fill_new[rowSums(is.na(df_fill_new))>0,]$ratings<-pred
+  df_fill<-rbind(df_fill,df_fill_new)
+}
+df_fill
+```
+
+
+
+
+##################PART B##################
+
+Evaluate number of clusters to use on data with visualizations
+Arguments: 
+toClust, the data to do kmeans cluster analysis
+maxClusts=15, the max number of clusters to consider
+seed, the random number to initialize the clusters
+iter.max, the max iterations for clustering algorithms to use
+nstart, the number of starting points to consider
+Results:
+a list of weighted sum of squares and the pamk output including optimal number of clusters (nc)
+to create visualizations need to print tmp
+
+```{r}
+library(ggplot2)
+library(cluster)
+library(fpc)
+library(factoextra)
+library(gridExtra)
+
+clustTest = function(toClust,print=TRUE,scale=TRUE,maxClusts=15,seed=12345,nstart=20,iter.max=100){
+  if(scale){ toClust = scale(toClust);}
+  set.seed(seed);  
+  wss <- (nrow(toClust)-1)*sum(apply(toClust,2,var))
+  for (i in 2:maxClusts) wss[i] <- sum(kmeans(toClust,centers=i,nstart=nstart,iter.max=iter.max)$withinss)
+  gpw = fviz_nbclust(toClust,kmeans,method="wss",iter.max=iter.max,nstart=nstart,k.max=maxClusts) #alternative way to get wss elbow chart.
+  pm1 = pamk(toClust,scaling=TRUE)
+  gps = fviz_nbclust(toClust,kmeans,method="silhouette",iter.max=iter.max,nstart=nstart,k.max=maxClusts) 
+  if(print){
+    grid.arrange(gpw,gps, nrow = 1)
+  }
+  list(wss=wss,pm1=pm1$nc,gpw=gpw,gps=gps)
+}
+
+clustTest(df,print=TRUE,scale=TRUE,maxClusts=15,seed=12345,nstart=20,iter.max=100) #our optimal clusters number is 3
+
+```
+
+
+
+Runs a set of clusters as kmeans
+Arguments:
+toClust, data.frame with data to cluster
+nClusts, vector of number of clusters, each run as separate kmeans 
+... some additional arguments to be passed to clusters
+Return:
+list of 
+kms, kmeans cluster output with length of nClusts
+ps, list of plots of the clusters against first 2 principle components
+
+```{r}
+runClusts = function(toClust,nClusts,print=TRUE,maxClusts=15,seed=12345,nstart=20,iter.max=100){
+  if(length(nClusts)>4){
+    warning("Using only first 4 elements of nClusts.")
+  }
+  kms=list(); ps=list();
+  for(i in 1:length(nClusts)){
+    kms[[i]] = kmeans(toClust,nClusts[i],iter.max = iter.max, nstart=nstart)
+    ps[[i]] = fviz_cluster(kms[[i]], geom = "point", data = toClust) + ggtitle(paste("k =",nClusts[i]))
+    
+  }
+  library(gridExtra)
+  if(print){
+    tmp = marrangeGrob(ps, nrow = 2,ncol=2)
+    print(tmp)
+  }
+  list(kms=kms,ps=ps)
+}
+clusts = runClusts(df[,3:6],c(2,3,4,5),print=TRUE,maxClusts=15,seed=12345,nstart=20,iter.max=100)
+#we try cluster number of 2,3,4,5. We can see from the result that cluster number=3 is the best one because others has overlap
+```
+
+
+
+
+Plots a kmeans cluster as three plot report
+pie chart with membership percentages in 3 segments
+ellipse plot that indicates cluster definitions against principle components
+barplot of the cluster means
+
+```{r}
+plotClust = function(km,toClust,discPlot=FALSE){
+  nc = length(km$size)
+  if(discPlot){par(mfrow=c(2,2))}
+  else {par(mfrow=c(3,1))}
+  percsize = paste(1:nc," = ",format(km$size/sum(km$size)*100,digits=2),"%",sep="")
+  pie(km$size,labels=percsize,col=1:nc)
+  
+  clusplot(toClust, km$cluster, color=TRUE, shade=TRUE,
+           labels=2, lines=0,col.clus=1:nc); #plot clusters against principal components
+  
+  if(discPlot){
+    plotcluster(toClust, km$cluster,col=km$cluster); #plot against discriminant functions ()
+  }
+  rng = range(km$centers)
+  dist = rng[2]-rng[1]
+  locs = km$centers+.05*dist*ifelse(km$centers>0,1,-1)
+  bm = barplot(km$centers,beside=TRUE,col=1:nc,main="Cluster Means",ylim=rng+dist*c(-.1,.1))
+  text(bm,locs,formatC(km$centers,format="f",digits=1))
+}
+kms = runClusts(df[,3:6],3,print=TRUE,maxClusts=3,seed=12345,nstart=20,iter.max=100)
+plotClust(kms[[1]][[1]],df[,3:6],discPlot = FALSE)
+km = kms$kms[[1]]
+#From the plot, we found that for segment 1, when price = $119.99, size = 18 inches, motion = rocking and style = glamour, this combination will bring higher rating(each attribute will bring higher rating than the other option) than price = $139.99, size = 26 inches, motion = bouncing and style = racing. Therefore, we choose profile 14 as the ideal product for segment 1; Similarly, for segment 2 and 3, we respectively choose profile 4 and profile 16 as ideal products for segment 2 and 3. 
+
+
+
+
+# market size for each segment
+km$size
+# coefficient for each segment
+attri_seg <- km$centers
+
+# assign cluster to each id 
+df = cbind(df,km$cluster)
+
+# calculate preference for each segment
+cluster1 <- df[df$`km$cluster` == 1, ]
+coefficient1 <- sapply(cluster1[,2:6],function(x) mean(x))
+cluster2 <- df[df$`km$cluster` == 2, ]
+coefficient2 <- sapply(cluster2[,2:6],function(x) mean(x))
+cluster3 <- df[df$`km$cluster` == 3, ]
+coefficient3 <- sapply(cluster3[,2:6],function(x) mean(x))
+product <- conjointData[1:16,4:7]
+product <- cbind(1, product)
+
+
+# segment 1
+# profile 4 is best 
+seg_1<-data.frame(c(1:16))
+for (i in 1:16){
+  seg_1[i,1]<- sum(coefficient1*product[i,])
+}
+order(seg_1, decreasing = T) 
+
+
+# segment 2
+# profile 14 is best
+seg_2<-data.frame(c(1:16))
+for (i in 1:16){
+  seg_2[i,1]<- sum(coefficient2 *product[i,])
+}
+order(seg_2, decreasing = T) 
+
+# segment 3
+# profile 16 is best
+seg_3<-data.frame(c(1:16))
+for (i in 1:16){
+  seg_3[i,1]<- sum(coefficient3 *product[i,])
+}
+order(seg_3, decreasing = T) 
+```
+
+
+
+
+dafaul(=0) is: $139.99, 18inches, bouncing, racing 
+
+compare to default price, when price is 119.99, segment 1 has the highest extra rating (+22.5) ,so segment 1 is the most price sensitive, segment 3 is least price sensitive(+8.9)
+
+compare to deault size, when  size is 26inches, segment 3 has the most extra rating(+16.6)  so segment 3 really like 26inches. By contrast, segment 2 has negative rating(-6.6) so segment 2 like 18 inches the most. 
+
+compare to default motion(bouncing),segment 2 like rocking the most because it has the highest extra rating(+10). Segment 1 like bouncing because it has negative rating(-9.4).
+
+Finally, compare to default style(racing), segment 3 like glamour the most (+11), segment 2 is indifferent between glamour and racing(+0.5). Segment 1 like racing the most(-6.6). 
+
+We calculate the integrated utility for each segment, using the coefficient generated from the cluter analysis.
+
+we selected the highest rating product for each segment.
+
+segment 1 -> profile 4
+segment 2 -> profile 14
+segment 3 -> profile 16
+
+
+
+
+##################PART C##################
+
+```{r}
+df_new<-merge(df_fill,respondentData,by="ID")
+#merge the na filled dataset with gender and age.
+reg_gender<-lm(ratings~factor(price)+factor(gender)+factor(size)+factor(motion)+factor(style)+factor(price)*factor(gender)+factor(size)*factor(gender)+factor(motion)*factor(gender)+factor(style)*factor(gender), data=df_new)
+summary(reg_gender)
+reg_gender$coefficients
+reg_age<-lm(ratings~factor(price)+factor(age)+factor(size)+factor(motion)+factor(style)+factor(price)*factor(age)+factor(size)*factor(age)+factor(motion)*factor(age)+factor(style)*factor(age), data=df_new)
+summary(reg_age)
+reg_gender_age<-lm(ratings~(factor(price)+factor(size)+factor(motion)+factor(style))*factor(gender)+(factor(price)+factor(size)+factor(motion)+factor(style))*factor(age)+factor(gender)*factor(age),data=df_new)
+summary(reg_gender_age)
+#Run a regression when gender and age are interact.
+# Difference of size and motion between part utilities are meaningful.
+
+
+df_average<-sapply(df[,2:6],function(x) mean(x))
+df_average<-t(as.data.frame(df_average))
+#Sum up four segments correlation and combine them with average intercept of non interact scenerio. 
+
+#According to the coefficients, we divided customers into 4 segments: two years old male, three & four years old male, two year old female, and three & four years old female. 
+# Three & four yeas old female and two years old female actually have the same product preference
+# Thus, there are three segments in a priori segmentation, which is profile 4, 8 and 14. 
+
+```
+
+
+
+
+##################PART D##################
+
+```{r}
+#assumption: we have 16 profiles in the market to check the top 3 ranking of atrributes combination
+prepare_marketshare<-t(data.frame(c(1:3)))
+colnames(prepare_marketshare)<-c("ID","profile","ratings")
+for (i in 1:length(unique(df_fill$ID))){
+  person<-df_fill[df_fill$ID==i,c(1,2,3)] 
+  highest_rating<-person[person$ratings==max(person$ratings),] #within each person, we compare different profiles and select the highest rating
+  prepare_marketshare<-rbind(prepare_marketshare,highest_rating)
+}
+prepare_marketshare 
+prepare_marketshare<-prepare_marketshare[2:201,]  #e.g.: ID=1 has the highest rating for profile 16
+
+
+
+market_share<-as.data.frame(unique(prepare_marketshare$profile))
+colnames(market_share)<-"profile"
+market_share$market_share<-0
+# 9 profiles rank as the first choice by each ID
+for (i in 1:9){
+  id<-market_share[i,1]
+  profileshare<-length(prepare_marketshare$profile[prepare_marketshare$profile==id])/length(prepare_marketshare$profile)
+  market_share[i,2]<-profileshare
+}
+market_share #top 3 market share profiles are 16, 4, 14
+# profiles 16: 119.99, 26inches, Glamour, Rocking
+# profiles 4: 119.99, 26inches, Bouncing, Racing
+# profitle 14: 119.99, 18inches, Glamour, Rocking
+
+
+
+
+#pre-market share dataframe(cell value is rating corresponding to each profile )
+df_simulation<-df_fill[c(4,7,8,14,16),1:3] #profile 4, 7, 8, 14 and 16
+for (i in 2:length(unique(df_fill$ID))){
+  df_ID<-df_fill[df_fill$ID==i,1:3]
+  df_ID<-df_ID[c(4,7,8,14,16),1:3]
+  df_simulation<-rbind(df_simulation,df_ID)
+}
+df_simulation
+library(reshape)
+df_simulation_new<-cast(df_simulation,ID~profile,value="ratings")
+colnames(df_simulation_new)<-c("ID","profile4","competitor profile7","competitor drop price profile8","profile 14","profile16")
+
+
+# Combining the result from B, C and whole market share, we find out that 
+# although we are using different segmentation method, the best product for each segment remain the same.
+# Therefore, we introduce four products.
+# Product4, Product8, Product14 and Product16
+
+
+# calculate matket share
+
+# First Possibility
+# Competitor does not react to our strategy, that means they still choose profile 7.
+
+# Scenario one
+# We launch profile 4 and profile 14.
+# We calculate the market for each profile
+
+df_simulation_new <- df_simulation_new[,2:6]
+scens = list()
+scens[[1]]=c(1,2)        
+scens[[2]]=c(2,3) 
+scens[[3]]=c(2,4)       
+scens[[4]]=c(2,5)        
+scens[[5]]=c(1,2,3) 
+scens[[6]]=c(1,2,4)       
+scens[[7]]=c(1,2,5)
+scens[[8]]=c(2,3,4)        
+scens[[9]]=c(2,3,5) 
+scens[[10]]=c(2,4,5)       
+scens[[11]]=c(1,2,3,4)        
+scens[[12]]=c(1,2,3,5) 
+scens[[13]]=c(1,2,4,5)       
+scens[[14]]=c(2,3,4,5)
+
+res = matrix(nrow=length(scens),ncol=length(df_simulation_new))
+m = numeric(length(nrow(df_simulation_new)))
+
+for (i in 1:length(scens)){
+  for (j in 1:nrow(df_simulation_new)){
+    data = df_simulation_new[,scens[[i]]]
+    m[j] = max(data[j,])
+    for (k in 1:length(data[j,])){
+      if(data[j,k] == m[j]){
+        data[j,k] = 1
+      }else{
+        data[j,k] = 0
+      }
+    }
+    data[j,] = data[j,]/sum(data[j,])
+  }
+  res[i,scens[[i]]] = colSums(data)/sum(data)
+}
+res[is.na(res)]<-0
+res
+
+p4 = 95.99-29
+p8 = 95.99 - 41
+p14 = 95.99 - 33
+p16 = 95.99-41
+product = c(p4,0,p8,p14,p16)
+
+profit = numeric(length(scens))
+
+for (i in 1:length(scens)){
+  profit[i] = sum(res[i,scens[[i]]]*product[scens[[i]]]) * 4000
+}
+profit
+
+fix_cost_1 = c(20000+20000/3,20000+20000/3,20000+20000/3,20000+20000/3,40000+40000/3,40000+40000/3,40000+40000/3,40000+40000/3,40000+40000/3,40000+40000/3,60000+20000,60000+20000,60000+20000,60000+20000)
+
+first_year_profit = profit - fix_cost_1
+first_year_profit
+max(first_year_profit)
+scens[which.max(first_year_profit)]
+
+fix_cost_2 = c(20000,20000,20000,20000,40000,40000,40000,40000,40000,40000,60000,60000,60000,60000)
+
+second_year_profit = profit - fix_cost_2
+second_year_profit
+max(second_year_profit)
+scens[which.max(second_year_profit)]
+
+
+
+#First year profit =133598.5
+#Long-Term Profit = 146931.8
+
+
+# We run other 6 scenarios with same calculation. 
+#The scenario with the highest Long-Term Profit is 146931.8, when we launch product 4, 14.
+
+
+
+# Second Scenerio: competitors react to our strategy and decreases their to $119.99, that means they use profile 8.
+# The best Scenerio we launch product 4 and product 14
+df_simulation_newnew = df_simulation_new[,c(1,3,4,5)]
+scens_new = list()
+scens_new[[1]]=c(1,2)        
+scens_new[[2]]=c(2,3)
+scens_new[[3]]=c(2,4)
+scens_new[[4]]=c(1,2,3)
+scens_new[[5]]=c(1,2,4)
+scens_new[[6]]=c(2,3,4)
+scens_new[[7]]=c(1,2,3,4)
+
+res_new = matrix(nrow=length(scens_new),ncol=length(df_simulation_new))
+m_new = numeric(length(nrow(df_simulation_new)))
+
+for (i in 1:length(scens_new)){
+  for (j in 1:nrow(df_simulation_new)){
+    data = df_simulation_new[,scens_new[[i]]]
+    m[j] = max(data[j,])
+    for (k in 1:length(data[j,])){
+      if(data[j,k] == m[j]){
+        data[j,k] = 1
+      }else{
+        data[j,k] = 0
+      }
+    }
+    data[j,] = data[j,]/sum(data[j,])
+  }
+  res_new[i,scens_new[[i]]] = colSums(data)/sum(data)
+}
+res_new[is.na(res_new)]<-0
+res_new
+
+p4 = 95.99-29
+p14 = 95.99 - 33
+p16 = 95.99-41
+product_new = c(p4,0,p14,p16)
+
+profit_new = numeric(length(scens_new))
+
+for (i in 1:length(scens_new)){
+  profit_new[i] = sum(res_new[i,scens_new[[i]]]*product_new[scens_new[[i]]]) * 4000
+}
+profit_new
+
+fix_cost_1 = c(20000+20000/3,20000+20000/3,20000+20000/3,40000+40000/3,40000+40000/3,40000+40000/3,60000+20000)
+
+first_year_profit = profit_new - fix_cost_1
+first_year_profit
+max(first_year_profit)
+scens_new[which.max(first_year_profit)]
+
+fix_cost_2 = c(20000,20000,20000,40000,40000,40000,60000)
+
+second_year_profit = profit_new - fix_cost_2
+second_year_profit
+max(second_year_profit)
+scens_new[which.max(second_year_profit)]
+#profile 4 and 14 get maximum profit for both short-term and long-term
+
+```
