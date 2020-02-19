@@ -4,7 +4,7 @@
 
 ### Category Name 1 
 
-[Project 1 Title](/Team 26 Toy Horse Code.rmd)
+[Project 1 Title]
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
