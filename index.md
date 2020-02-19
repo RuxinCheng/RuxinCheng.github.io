@@ -4,8 +4,8 @@
 
 ### Category Name 1 
 
-[Toy Horse Recommendation]("Team 26 Toy Horse Code.Rmd")
-<"Team 26 Toy Horse Code.rmd">
+[Toy Horse Recommendation]("RuxinCheng.github.io/Team 26 Toy Horse Code.Rmd")
+
 
 ---
 [Project 2 Title](/pdf/sample_presentation.pdf)
