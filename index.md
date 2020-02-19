@@ -4,7 +4,7 @@
 
 ### Category Name 1 
 
-[Project 1 Title](/pdf/sample_presentation.pdf)
+[Toy Horse Recommendation](/pdf/sample_presentation.pdf)
 <"Team 26 Toy Horse Code.rmd">
 
 ---
