@@ -7,7 +7,7 @@
 [Toy Horse Recommendation]("Team26-Yogurt-Code.html")
 <img src="images/sales percentage of flavors of greek yogurt.png">
 <img src="images/sales percentage of flavors of regular yogurt.png">
-
+<img src="images/sales percentage of brand of greek yogurt.jpg">
 ---
 [Project 2 Title](/pdf/sample_presentation.pdf)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
