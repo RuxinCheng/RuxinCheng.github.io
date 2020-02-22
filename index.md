@@ -8,6 +8,9 @@
 <img src="images/sales percentage of flavors of greek yogurt.png">
 <img src="images/sales percentage of flavors of regular yogurt.png">
 <img src="images/sales percentage of brand of greek yogurt.jpg">
+<img src="images/sales percentage of brands of regular yogurt.jpg">
+<img src="images/sales percentage of flavors of PVTLBL in greek yogurt.jpg">
+<img src="images/sales percentage of flavors of PVTLBL in regular yogurt.jpg">
 ---
 [Project 2 Title](/pdf/sample_presentation.pdf)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
