@@ -4,7 +4,7 @@
 
 ### Case Study 
 
-[Toy Horse Recommendation]("Team26-Yogurt-Code.html")
+[Greek Yogurt Flavor Recommendation]("Team26-Yogurt-Code.html")
 <img src="images/sales percentage of flavors of greek yogurt.png">
 <img src="images/sales percentage of flavors of regular yogurt.png">
 <img src="images/sales percentage of brand of greek yogurt.jpg">
