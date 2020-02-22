@@ -5,7 +5,7 @@
 ### Case Study 
 
 [Toy Horse Recommendation]("Team26-Yogurt-Code.html")
-
+<img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
 [Project 2 Title](/pdf/sample_presentation.pdf)
