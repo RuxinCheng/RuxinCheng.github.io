@@ -13,9 +13,10 @@
 <img src="images/sales percentage of flavors of PVTLBL in regular yogurt.jpg">
 <img src="images/survey response 1.png">
 <img src="images/survey response 2.png">
+<img src="images/chi square test.png">
 ---
 [Project 2 Title](/pdf/sample_presentation.pdf)
-<img src="images/images/survey response 1.png">
+<img src="images/chi square test.png">
 
 ---
 [Project 3 Title](http://example.com/)
