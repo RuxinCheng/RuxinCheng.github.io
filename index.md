@@ -33,11 +33,14 @@
 
 ### Category Name 2
 
-- [Project 1 Title](http://example.com/)
-- [Project 2 Title](http://example.com/)
-- [Project 3 Title](http://example.com/)
-- [Project 4 Title](http://example.com/)
-- [Project 5 Title](http://example.com/)
+[Toy Horse Conjoint Analysis](pdf/Toy Horse Case Code.html)
+<img src="images/optimal number of clusters1.png">
+<img src="images/optimal number of clusters2.png">
+<img src="images/k = 3.png">
+<img src="images/cluster analysis.png">
+<img src="images/gender and age.png">
+<img src="images/market share1.png">
+<img src="images/market share2.png">
 
 ---
 
