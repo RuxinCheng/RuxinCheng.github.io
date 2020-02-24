@@ -16,7 +16,16 @@
 <img src="images/chi square test.png">
 ---
 [Toy Horse Conjoint Analysis](/pdf/Toy Horse Case Code.html)
-<img src="images/chi square test.png">
+<img src="images/optimal number of clusters1.png">
+<img src="images/optimal number of clusters2.png">
+<img src="images/k = 3.png">
+<img src="images/cluster analysis.png">
+<img src="images/gender and age.png">
+<img src="images/market share1.png">
+<img src="images/market share2.png">
+
+
+
 
 ---
 [Pricing Competition](http://example.com/)
