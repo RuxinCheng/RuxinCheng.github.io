@@ -4,17 +4,9 @@
 
 ### Case Study 
 
-[Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek-Yogurt-Case-Code.html)
+[Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
-<img src="images/sales percentage of flavors of greek yogurt.png"> 
-<img src="images/sales percentage of flavors of regular yogurt.png">
-<img src="images/sales percentage of brand of greek yogurt.jpg"> 
-<img src="images/sales percentage of brands of regular yogurt.jpg">
-<img src="images/sales percentage of flavors of PVTLBL in greek yogurt.jpg">
-<img src="images/sales percentage of flavors of PVTLBL in regular yogurt.jpg">
-<img src="images/survey response 1.png">
-<img src="images/survey response 2.png">
-<img src="images/chi square test.png">
+<img src="images/yogurt case.png"> 
 ---
 
 
