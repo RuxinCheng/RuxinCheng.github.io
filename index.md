@@ -2,7 +2,7 @@
 
 ---
 
-### Case Study 
+### Group Case
 
 [Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
 
