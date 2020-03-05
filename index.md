@@ -4,7 +4,8 @@
 
 ### Case Study 
 
-[Greek Yogurt Flavor Recommendation](pdf/Greek-Yogurt-Case-Code.html)
+[Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek-Yogurt-Case-Code.html)
+[R Code](pdf/Greek-Yogurt-Case-Code.html)
 <img src="images/sales percentage of flavors of greek yogurt.png"> 
 <img src="images/sales percentage of flavors of regular yogurt.png">
 <img src="images/sales percentage of brand of greek yogurt.jpg"> 
