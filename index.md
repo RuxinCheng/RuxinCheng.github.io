@@ -13,7 +13,7 @@
 
 
 
-[Toy Horse Conjoint Analysis](pdf/Toy Horse Case Code.html)
+[Toy Horse Conjoint Analysis](pdf/Toy Horse Case Code.Rmd)
 <img src="images/optimal number of clusters1.png">
 <img src="images/optimal number of clusters2.png">
 <img src="images/k = 3.png">
