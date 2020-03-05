@@ -5,6 +5,7 @@
 ### Case Study 
 
 [Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
+
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 <img src="images/yogurt case.png"> 
 ---
