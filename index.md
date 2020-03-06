@@ -5,6 +5,7 @@
 ### Group Case
 
 [Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
+
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 
 <img src="images/yogurt case.png"> 
@@ -13,14 +14,13 @@
 
 
 
-[Toy Horse Conjoint Analysis](pdf/Toy Horse Case Code.Rmd)
-<img src="images/optimal number of clusters1.png">
-<img src="images/optimal number of clusters2.png">
-<img src="images/k = 3.png">
-<img src="images/cluster analysis.png">
-<img src="images/gender and age.png">
-<img src="images/market share1.png">
-<img src="images/market share2.png">
+[Toy Horse Conjoint Analysis - using R & Excel](pdf/Toy Horse Recommendation Case.pdf)
+
+[R Code First Half](pdf/Toy-Horse-Case-Code1.html)
+[R Code Second Half](pdf/Toy-Horse-Case-Code2.html)
+
+<img src="images/toy horse case.png">
+
 ---
 
 [Pricing Competition](http://example.com/)
