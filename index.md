@@ -11,15 +11,9 @@
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 
 <img src="images/yogurt case.png"> 
-
-
-
-
-
-
-
-
 ---
+
+
 
 
 
