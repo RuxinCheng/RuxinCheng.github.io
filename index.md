@@ -9,6 +9,9 @@
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 
 <img src="images/yogurt case.png"> 
+
+
+
 ---
 
 
@@ -17,6 +20,7 @@
 [Toy Horse Conjoint Analysis - using R & Excel](pdf/Toy Horse Recommendation Case.pdf)
 
 [R Code First Half](pdf/Toy-Horse-Case-Code1.html)
+
 [R Code Second Half](pdf/Toy-Horse-Case-Code2.html)
 
 <img src="images/toy horse case.png">
