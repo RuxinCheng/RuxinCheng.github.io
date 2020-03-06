@@ -20,7 +20,11 @@
 [R Code Second Half](pdf/Toy-Horse-Case-Code2.html)
 
 <img src="images/toy horse case.png">
+
+
 ---
+
+
 [Pricing Competition](http://example.com/)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
