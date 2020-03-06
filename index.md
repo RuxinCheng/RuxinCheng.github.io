@@ -4,11 +4,18 @@
 
 ### Group Case
 
+
+
 [Greek Yogurt Flavor Recommendation - using SQL, Tableau & R](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
 
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 
 <img src="images/yogurt case.png"> 
+
+
+
+
+
 
 
 
@@ -25,7 +32,17 @@
 
 <img src="images/toy horse case.png">
 
+
+
+
+
 ---
+
+
+
+
+
+
 
 [Pricing Competition](http://example.com/)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
