@@ -27,9 +27,14 @@
 
 ---
 
+### Wine Retailer Email to Target Customers - using R 
 
-[Pricing Competition](http://example.com/)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+[Slides](pdf/Wine Retailer Case.pdf)
+
+[R Code](pdf/Email to Wine Purchasers.html)
+
+<img src="images/Wine Retailer Case.png">
+
 
 ---
 
