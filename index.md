@@ -55,8 +55,7 @@
 <img src="images/python project.png">
 
 
----
----
+------
 
 ### Category Name 2
 
