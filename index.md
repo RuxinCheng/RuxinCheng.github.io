@@ -61,7 +61,7 @@
 
 ---
 
-
+### Pricing Competition - using R & Tableau
 
 
 ---
