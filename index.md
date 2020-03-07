@@ -1,7 +1,6 @@
 ## Portfolio
 
----
----
+------
 
 ### Group Case
 
