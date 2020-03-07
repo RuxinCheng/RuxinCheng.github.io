@@ -38,6 +38,22 @@
 
 ---
 
+### Assessment of the credit risk of Home Equity Line of Credit(HELOC) Dataset - using Python & Streamlit
+
+[Slides](pdf/Python Project 2.pdf)
+
+[Report](pdf/Python Project 2 Report.pdf)
+
+[Python Data Cleaning Code](pdf/Presentation II Data Cleaning - Team 26.html)
+
+[Python Model Code](pdf/Presentation II Model - Team 26.html)
+
+<img src="images/interface.png">
+<img src="images/python project.png">
+
+
+---
+
 ### Category Name 2
 
 
