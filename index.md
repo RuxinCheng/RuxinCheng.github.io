@@ -1,11 +1,11 @@
 ## Portfolio
 
-------
+---
 
 ### Group Case
 
 ---
-
+**aaa**
 ### Greek Yogurt Flavor Recommendation - using SQL, Tableau & R
 
 [Slides](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
@@ -55,7 +55,7 @@
 <img src="images/python project.png">
 
 
-------
+---
 
 ### Category Name 2
 
