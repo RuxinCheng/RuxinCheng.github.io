@@ -3,9 +3,12 @@
 ---
 
 ### Group Case
+
+---
+
 ### Greek Yogurt Flavor Recommendation - using SQL, Tableau & R
 
-- [Slides](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
+[Slides](pdf/Greek Yogurt Flavor Recommendation Case.pdf)
 
 [R Code](pdf/Greek-Yogurt-Case-Code.html)
 
@@ -50,12 +53,6 @@
 
 <img src="images/interface.png">
 <img src="images/python project.png">
-
-
----
-
-### Category Name 2
-
 
 
 ---
