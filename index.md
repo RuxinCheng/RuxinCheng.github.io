@@ -1,6 +1,7 @@
 ## Portfolio
 
 ---
+---
 
 ### Group Case
 
@@ -55,6 +56,7 @@
 <img src="images/python project.png">
 
 
+---
 ---
 
 ### Category Name 2
