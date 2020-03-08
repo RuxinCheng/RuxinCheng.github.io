@@ -65,6 +65,8 @@
 
 [Slides](pdf/Pricing Case Competition.pdf)
 
+<img src="images/pricing competition.png">
+
 ---
 
 
