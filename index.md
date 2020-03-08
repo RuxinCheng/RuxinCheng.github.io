@@ -63,6 +63,7 @@
 
 ### Pricing Competition - using R & Tableau
 
+[Slides](pdf/Pricing Case Competition.pdf)
 
 ---
 
