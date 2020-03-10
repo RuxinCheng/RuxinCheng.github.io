@@ -65,8 +65,6 @@
 
 [Slides](pdf/Pricing Case Competition.pdf)
 
-[R Code](pdf/Pricing-Case-Competition-Code.html)
-
 <img src="images/pricing competition.png">
 
 ---
